@@ -4,15 +4,11 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+
+	"ToDoInventory/models"
 )
 
-type toDo struct {
-	ID    string `json:"id"`
-	Title string `json:"title"`
-	Done  bool   `json:"done"`
-}
-
-var toDoList = []toDo{
+var toDoList = []models.ToDo{
 	{ID: "1", Title: "Einkaufen gehen", Done: false},
 	{ID: "2", Title: "Go lernen", Done: true},
 	{ID: "3", Title: "API testen", Done: false},
@@ -23,7 +19,7 @@ func getToDoList(c *gin.Context) {
 }
 
 func postToDo(c *gin.Context) {
-	var newToDo toDo
+	var newToDo models.ToDo
 
 	err := c.BindJSON(&newToDo)
 	if err != nil {
