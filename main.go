@@ -1,13 +1,9 @@
 package main
 
-import (
-	"github.com/gin-gonic/gin"
-)
+import "ToDoInventory/router"
 
 func main() {
-	router := gin.Default()
-
-	router
+	router := router.InitRouter()
 
 	router.Run("localhost:8080")
 }

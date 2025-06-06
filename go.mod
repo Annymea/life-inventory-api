@@ -1,4 +1,4 @@
-module ToDoInventory/web-services-gin
+module ToDoInventory
 
 go 1.24.3
 
