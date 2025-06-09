@@ -26,6 +26,9 @@ func main() {
 	}
 	db.AutoMigrate(&models.ToDo{})
 
+	testToDo := &models.ToDo{ID: "4", Title: "Test", Done: true, PlannedDate: ""}
+	db.Create(&testToDo)
+
 	//start server
 	r.Run("localhost:8080")
 }
