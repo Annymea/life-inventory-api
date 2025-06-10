@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 
 	"ToDoInventory/internal/models"
 )
@@ -14,11 +15,19 @@ var toDoList = []models.ToDo{
 	{ID: "3", Title: "API testen", Done: false},
 }
 
-func GetToDoList(c *gin.Context) {
+type Handler struct {
+	DB *gorm.DB
+}
+
+func NewHandler(db *gorm.DB) *Handler {
+	return &Handler{db}
+}
+
+func (h *Handler) GetToDoList(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, toDoList)
 }
 
-func PostToDo(c *gin.Context) {
+func (h *Handler) PostToDo(c *gin.Context) {
 	var newToDo models.ToDo
 
 	err := c.BindJSON(&newToDo)
@@ -31,7 +40,7 @@ func PostToDo(c *gin.Context) {
 	c.IndentedJSON(http.StatusCreated, newToDo)
 }
 
-func GetListItemById(c *gin.Context) {
+func (h *Handler) GetListItemById(c *gin.Context) {
 	id := c.Param("id")
 
 	for _, a := range toDoList {
