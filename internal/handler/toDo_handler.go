@@ -47,10 +47,21 @@ func (h *Handler) PostToDo(c *gin.Context) {
 
 	err := c.BindJSON(&newToDo)
 	if err != nil {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	toDoList = append(toDoList, newToDo)
+	result := h.DB.Create(&newToDo)
+
+	if result.Error != nil {
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": result.Error.Error()})
+		return
+	}
+
+	if newToDo.ID == "" {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "ID is required"})
+		return
+	}
 
 	c.IndentedJSON(http.StatusCreated, newToDo)
 }
