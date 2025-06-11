@@ -24,6 +24,21 @@ func NewHandler(db *gorm.DB) *Handler {
 }
 
 func (h *Handler) GetToDoList(c *gin.Context) {
+	toDoList := []models.ToDo{}
+
+	//get all items from the database
+	result := h.DB.Find(&toDoList)
+
+	if result.Error != nil {
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": result.Error.Error()})
+		return
+	}
+
+	if len(toDoList) == 0 {
+		c.IndentedJSON(http.StatusNotFound, gin.H{"message": "no items found"})
+		return
+	}
+
 	c.IndentedJSON(http.StatusOK, toDoList)
 }
 
