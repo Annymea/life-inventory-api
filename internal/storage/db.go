@@ -19,8 +19,9 @@ func AddNewItem(db *gorm.DB, newItem models.ToDo) (newId string, err error) {
 	return newItem.ID, nil
 }
 
-// Hier wird die Datenbank initialisiert
 func InitDb() *gorm.DB {
+
+	//TODO: Das wirkt noch nicht wirklich gut, hier ist einfach user und pw einfach hard reingecoded...
 	dbUrl := "postgres://pg:pass@localhost:5432/toDoList"
 	db, err := gorm.Open(postgres.Open(dbUrl), &gorm.Config{})
 
