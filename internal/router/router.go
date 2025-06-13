@@ -14,5 +14,6 @@ func RegisterRoutes(engine *gin.Engine, db *gorm.DB) {
 	engine.GET("/list", handlerDI.GetToDoList)
 	engine.POST("/todo", handlerDI.PostToDo)
 	engine.GET("/todo/:id", handlerDI.GetListItemById)
+	engine.GET("todo", handlerDI.GetToDoListByParameters)
 
 }
