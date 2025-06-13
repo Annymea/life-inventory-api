@@ -1,7 +1,8 @@
 package handler
 
 import (
-	"ToDoInventory/internal/models"
+	"ToDoInventory/internal/service"
+	databasetypes "ToDoInventory/internal/storage/databaseTypes"
 	"net/http"
 	"strconv"
 
@@ -10,24 +11,25 @@ import (
 )
 
 func (h *Handler) GetToDoListByParameters(c *gin.Context) {
-	toDoList := []models.GetToDoResponse{}
+	toDoList := []databasetypes.ToDo{}
 
 	doneFlag := c.Query("done")
 	date := c.Query("date")
 
-	q := h.DB.Model(&models.GetToDoResponse{})
+	q := h.DB.Model(&databasetypes.ToDo{})
 
 	if doneFlag != "" {
 		boolValue, err := strconv.ParseBool(doneFlag)
 		if err != nil {
 			c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "invalid value for done"})
+			return
 		}
 
 		q = q.Where("done = ?", boolValue)
 	}
 
 	if date != "" {
-		q = q.Where("date = ?", date)
+		q = q.Where("planned_date = ?", date)
 	}
 
 	result := q.Find(&toDoList)
@@ -42,11 +44,11 @@ func (h *Handler) GetToDoListByParameters(c *gin.Context) {
 		return
 	}
 
-	c.IndentedJSON(http.StatusOK, toDoList)
+	c.IndentedJSON(http.StatusOK, service.ConvListToGetResponse(toDoList))
 }
 
 func (h *Handler) GetToDoList(c *gin.Context) {
-	toDoList := []models.GetToDoResponse{}
+	toDoList := []databasetypes.ToDo{}
 
 	result := h.DB.Find(&toDoList)
 
@@ -60,13 +62,13 @@ func (h *Handler) GetToDoList(c *gin.Context) {
 		return
 	}
 
-	c.IndentedJSON(http.StatusOK, toDoList)
+	c.IndentedJSON(http.StatusOK, service.ConvListToGetResponse(toDoList))
 }
 
 func (h *Handler) GetListItemById(c *gin.Context) {
 	id := c.Param("id")
 
-	toDoListItem := models.GetToDoResponse{}
+	toDoListItem := databasetypes.ToDo{}
 
 	result := h.DB.First(&toDoListItem, "id = ?", id)
 
@@ -79,5 +81,5 @@ func (h *Handler) GetListItemById(c *gin.Context) {
 		return
 	}
 
-	c.IndentedJSON(http.StatusOK, toDoListItem)
+	c.IndentedJSON(http.StatusOK, service.ConvToGetResponse(toDoListItem))
 }
