@@ -10,12 +10,12 @@ import (
 )
 
 func (h *Handler) GetToDoListByParameters(c *gin.Context) {
-	toDoList := []models.ToDo{}
+	toDoList := []models.GetToDoResponse{}
 
 	doneFlag := c.Query("done")
 	date := c.Query("date")
 
-	q := h.DB.Model(&models.ToDo{})
+	q := h.DB.Model(&models.GetToDoResponse{})
 
 	if doneFlag != "" {
 		boolValue, err := strconv.ParseBool(doneFlag)
@@ -46,7 +46,7 @@ func (h *Handler) GetToDoListByParameters(c *gin.Context) {
 }
 
 func (h *Handler) GetToDoList(c *gin.Context) {
-	toDoList := []models.ToDo{}
+	toDoList := []models.GetToDoResponse{}
 
 	result := h.DB.Find(&toDoList)
 
@@ -66,7 +66,7 @@ func (h *Handler) GetToDoList(c *gin.Context) {
 func (h *Handler) GetListItemById(c *gin.Context) {
 	id := c.Param("id")
 
-	toDoListItem := models.ToDo{}
+	toDoListItem := models.GetToDoResponse{}
 
 	result := h.DB.First(&toDoListItem, "id = ?", id)
 
