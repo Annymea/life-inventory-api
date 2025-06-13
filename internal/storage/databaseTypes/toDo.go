@@ -1,4 +1,4 @@
-package databasetypes
+package datatypes
 
 type ToDo struct {
 	ID          string `gorm:"primaryKey"`

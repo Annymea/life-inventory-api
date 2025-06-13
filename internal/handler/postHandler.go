@@ -5,11 +5,12 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"ToDoInventory/internal/models"
+	"ToDoInventory/internal/service"
+	datatypes "ToDoInventory/internal/storage/databaseTypes"
 )
 
 func (h *Handler) PostToDo(c *gin.Context) {
-	var newToDo models.PostToDoRequest
+	var newToDo datatypes.ToDo
 
 	err := c.BindJSON(&newToDo)
 	if err != nil {
@@ -29,5 +30,5 @@ func (h *Handler) PostToDo(c *gin.Context) {
 		return
 	}
 
-	c.IndentedJSON(http.StatusCreated, newToDo)
+	c.IndentedJSON(http.StatusCreated, service.ConvToToDoDTO(newToDo))
 }
