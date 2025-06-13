@@ -9,7 +9,7 @@ import (
 )
 
 func (h *Handler) PostToDo(c *gin.Context) {
-	var newToDo models.ToDo
+	var newToDo models.PostToDoRequest
 
 	err := c.BindJSON(&newToDo)
 	if err != nil {

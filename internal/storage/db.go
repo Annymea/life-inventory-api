@@ -1,14 +1,14 @@
 package storage
 
 import (
-	"ToDoInventory/internal/models"
+	databasetypes "ToDoInventory/internal/storage/databaseTypes"
 	"log"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
-func AddNewItem(db *gorm.DB, newItem models.ToDo) (newId string, err error) {
+func AddNewItem(db *gorm.DB, newItem databasetypes.ToDo) (newId string, err error) {
 	res := db.Create(&newItem)
 
 	if res.Error != nil {
@@ -29,9 +29,9 @@ func InitDb() *gorm.DB {
 		log.Fatalln(err)
 		return nil
 	}
-	db.AutoMigrate(&models.ToDo{})
+	db.AutoMigrate(&databasetypes.ToDo{})
 
-	testToDo := models.ToDo{ID: "5", Title: "Test", Done: true, PlannedDate: ""}
+	testToDo := databasetypes.ToDo{ID: "5", Title: "Test", Done: true, PlannedDate: ""}
 	AddNewItem(db, testToDo)
 
 	return db
