@@ -2,7 +2,8 @@ package handler
 
 import (
 	"ToDoInventory/internal/service"
-	datatypes "ToDoInventory/internal/storage/databaseTypes"
+
+	"ToDoInventory/internal/storage/datatypes"
 	"net/http"
 	"strconv"
 

@@ -2,7 +2,7 @@ package service
 
 import (
 	"ToDoInventory/internal/models"
-	datatypes "ToDoInventory/internal/storage/databaseTypes"
+	"ToDoInventory/internal/storage/datatypes"
 )
 
 //Hier wird das mapping von den entgegengenommenen Types zu Datenbanktypen vorgenommen
@@ -25,4 +25,13 @@ func ConvListToToDoDTO(dbToDoList []datatypes.ToDo) []models.ToDoDTO {
 	}
 
 	return convertedList
+}
+
+func ConvToDatabaseToDo(dtoToDo models.ToDoDTO) datatypes.ToDo {
+	return datatypes.ToDo{
+		ID:          dtoToDo.ID,
+		Title:       dtoToDo.Title,
+		Done:        dtoToDo.Done,
+		PlannedDate: dtoToDo.PlannedDate,
+	}
 }

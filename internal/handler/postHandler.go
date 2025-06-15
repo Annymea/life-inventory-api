@@ -5,23 +5,16 @@ import (
 
 	"github.com/gin-gonic/gin"
 
+	"ToDoInventory/internal/models"
 	"ToDoInventory/internal/service"
-	datatypes "ToDoInventory/internal/storage/databaseTypes"
 )
 
 func (h *Handler) PostToDo(c *gin.Context) {
-	var newToDo datatypes.ToDo
+	var newToDo models.ToDoDTO
 
 	err := c.BindJSON(&newToDo)
 	if err != nil {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
-	result := h.DB.Create(&newToDo)
-
-	if result.Error != nil {
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": result.Error.Error()})
 		return
 	}
 
@@ -30,5 +23,12 @@ func (h *Handler) PostToDo(c *gin.Context) {
 		return
 	}
 
-	c.IndentedJSON(http.StatusCreated, service.ConvToToDoDTO(newToDo))
+	result := h.DB.Create(service.ConvToDatabaseToDo(newToDo))
+
+	if result.Error != nil {
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": result.Error.Error()})
+		return
+	}
+
+	c.IndentedJSON(http.StatusCreated, newToDo)
 }
