@@ -1,7 +1,7 @@
 package handler
 
 import (
-	datatypes "ToDoInventory/internal/storage/databaseTypes"
+	"ToDoInventory/internal/storage/datatypes"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
