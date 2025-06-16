@@ -27,7 +27,7 @@ func main() {
 	//router stuff
 	gin.ForceConsoleColor()
 	r := gin.Default() //Default Middleware -> Wenn ich hier was eigenes habe, dann muss ich es anpassen
-
+	//r.Use(cors.Default())
 	router.RegisterRoutes(r, db)
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	//start server

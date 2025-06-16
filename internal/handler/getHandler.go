@@ -54,7 +54,7 @@ func (h *Handler) GetToDoListByParameters(c *gin.Context) {
 // @Tags todos
 // @Produce json
 // @Success 200 {array} models.ToDoDTO
-// @Failure 500 {object} map[string]string
+// @Failure 500
 // @Router /todos [get]
 func (h *Handler) GetToDoList(c *gin.Context) {
 	toDoList := []datatypes.ToDo{}
