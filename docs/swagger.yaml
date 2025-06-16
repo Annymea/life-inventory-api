@@ -1,0 +1,42 @@
+basePath: /
+definitions:
+  models.ToDoDTO:
+    properties:
+      done:
+        type: boolean
+      id:
+        type: string
+      plannedDate:
+        type: string
+      title:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: API zur Verwaltung von ToDos.
+  title: ToDo Inventory API
+  version: "1.0"
+paths:
+  /todos:
+    get:
+      description: Gibt eine Liste aller ToDos zurück
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.ToDoDTO'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Alle ToDos abrufen
+      tags:
+      - todos
+swagger: "2.0"
