@@ -48,6 +48,14 @@ func (h *Handler) GetToDoListByParameters(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, service.ConvListToToDoDTO(toDoList))
 }
 
+// GetToDoList gibt alle ToDo-Einträge zurück
+// @Summary Alle ToDos abrufen
+// @Description Gibt eine Liste aller ToDos zurück
+// @Tags todos
+// @Produce json
+// @Success 200 {array} models.ToDoDTO
+// @Failure 500 {object} map[string]string
+// @Router /todos [get]
 func (h *Handler) GetToDoList(c *gin.Context) {
 	toDoList := []datatypes.ToDo{}
 
