@@ -57,6 +57,46 @@ paths:
         "500":
           description: Internal Server Error
       summary: Get all todos (with filters)
+    post:
+      description: Creates a new todo
+      parameters:
+      - description: New todo
+        in: body
+        name: todo
+        required: true
+        schema:
+          $ref: '#/definitions/models.ToDoDTO'
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.ToDoDTO'
+        "400":
+          description: Bad Request
+        "500":
+          description: Internal Server Error
+      summary: Create new todo
+    put:
+      description: Updates the todo with the given ID. The existing item will be completely
+        overwritten by the provided data. The item will be identified by the ID of
+        the item.
+      parameters:
+      - description: Updated ToDo object
+        in: body
+        name: ToDo
+        required: true
+        schema:
+          $ref: '#/definitions/models.ToDoDTO'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ToDoDTO'
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+      summary: Update a todo
   /todo/{id}:
     delete:
       description: Deletes exactly one todo by ID
@@ -92,30 +132,4 @@ paths:
         "500":
           description: Internal Server Error
       summary: Get a todo by ID
-  /todos:
-    post:
-      consumes:
-      - application/json
-      description: Erstellt ein neues ToDo
-      parameters:
-      - description: Neues ToDo
-        in: body
-        name: todo
-        required: true
-        schema:
-          $ref: '#/definitions/models.ToDoDTO'
-      produces:
-      - application/json
-      responses:
-        "201":
-          description: Created
-          schema:
-            $ref: '#/definitions/models.ToDoDTO'
-        "400":
-          description: Bad Request
-        "500":
-          description: Internal Server Error
-      summary: Neues ToDo anlegen
-      tags:
-      - todos
 swagger: "2.0"
