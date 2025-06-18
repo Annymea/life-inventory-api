@@ -9,6 +9,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// @Summary Update a todo
+// @Description Updates the todo with the given ID. The existing item will be completely overwritten by the provided data. The item will be identified by the ID of the item.
+// @Param ToDo body models.ToDoDTO true "Updated ToDo object"
+// @Success 200 {object} models.ToDoDTO
+// @Failure 400
+// @Failure 404
+// @Router /todo [put]
 func (h *Handler) UpdateToDo(c *gin.Context) {
 	updatedToDo := models.ToDoDTO{}
 
