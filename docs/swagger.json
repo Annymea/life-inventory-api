@@ -9,16 +9,10 @@
     "host": "localhost:8080",
     "basePath": "/",
     "paths": {
-        "/todos": {
+        "/list": {
             "get": {
-                "description": "Gibt eine Liste aller ToDos zurück",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "todos"
-                ],
-                "summary": "Alle ToDos abrufen",
+                "description": "Returns a list of all todos",
+                "summary": "Get all todos",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -33,7 +27,81 @@
                         "description": "Internal Server Error"
                     }
                 }
-            },
+            }
+        },
+        "/todo": {
+            "get": {
+                "description": "Returns a list of all todos (fitting to the filters)",
+                "summary": "Get all todos (with filters)",
+                "parameters": [
+                    {
+                        "type": "boolean",
+                        "description": "Filter by done status",
+                        "name": "done",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Filter by planned date (YYYY-MM-DD)",
+                        "name": "date",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.ToDoDTO"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/todo/{id}": {
+            "get": {
+                "description": "Returns exactly one todo with the given ID",
+                "summary": "Get a todo by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ID of the todo",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.ToDoDTO"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/todos": {
             "post": {
                 "description": "Erstellt ein neues ToDo",
                 "consumes": [
