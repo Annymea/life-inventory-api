@@ -11,8 +11,6 @@ import (
 	"ToDoInventory/internal/storage"
 
 	"github.com/gin-gonic/gin"
-	swaggerFiles "github.com/swaggo/files"
-	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func main() {
@@ -29,7 +27,7 @@ func main() {
 	r := gin.Default() //Default Middleware -> Wenn ich hier was eigenes habe, dann muss ich es anpassen
 	//r.Use(cors.Default())
 	router.RegisterRoutes(r, db)
-	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
 	//start server
 	r.Run("localhost:8080")
 }

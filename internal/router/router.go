@@ -5,11 +5,16 @@ import (
 	"gorm.io/gorm"
 
 	"ToDoInventory/internal/handler"
+
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func RegisterRoutes(engine *gin.Engine, db *gorm.DB) {
 
 	handlerDI := handler.NewHandler(db)
+
+	engine.GET("/docu/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	engine.GET("/list", handlerDI.GetToDoList)
 	engine.POST("/todo", handlerDI.PostToDo)
