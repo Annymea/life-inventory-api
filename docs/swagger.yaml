@@ -58,6 +58,20 @@ paths:
           description: Internal Server Error
       summary: Get all todos (with filters)
   /todo/{id}:
+    delete:
+      description: Deletes exactly one todo by ID
+      parameters:
+      - description: ID of the todo
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+        "500":
+          description: Internal Server Error
+      summary: Delete a todo by ID
     get:
       description: Returns exactly one todo with the given ID
       parameters:
