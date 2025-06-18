@@ -105,6 +105,27 @@ const docTemplate = `{
                         "description": "Internal Server Error"
                     }
                 }
+            },
+            "delete": {
+                "description": "Deletes exactly one todo by ID",
+                "summary": "Delete a todo by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ID of the todo",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
             }
         },
         "/todos": {
