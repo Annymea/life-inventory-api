@@ -1,4 +1,4 @@
-# Personal Organizer Backend
+# Life-Inventory-API
 
 This repository manages the storage and handling of personal entries — such as tasks, routines, reminders, and appointments — grouped by categories.
 
@@ -13,6 +13,10 @@ This repository manages the storage and handling of personal entries — such as
 - Save new entries  
 - Update existing entries  
 - Delete entries  
+
+## API Documentation
+Swagger UI is available here (the project must be running):  
+👉 [http://localhost:8080/docu/index.html](http://localhost:8080/docu/index.html)
 
 ## Planned features
 - As my app development progresses (link to app repo will be added here), I will continue to extend the functionality.  
