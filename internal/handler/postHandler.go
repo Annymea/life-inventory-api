@@ -9,33 +9,33 @@ import (
 	"LifeInventoryApi/internal/service"
 )
 
-// @Summary	Create new todo
-// @Description Creates a new todo
-// @Param todo body models.ToDoDTO true "New todo"
+// @Summary	Create new entry
+// @Description Creates a new entry
+// @Param entry body models.ToDoDTO true "New entry"
 // @Success 201 {object} models.ToDoDTO
 // @Failure 400
 // @Failure 500
-// @Router /todo [post]
-func (h *Handler) PostToDo(c *gin.Context) {
-	var newToDo models.ToDoDTO
+// @Router /entry [post]
+func (h *Handler) PostEntry(c *gin.Context) {
+	var newEntry models.ToDoDTO
 
-	err := c.BindJSON(&newToDo)
+	err := c.BindJSON(&newEntry)
 	if err != nil {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	if newToDo.ID == "" {
+	if newEntry.ID == "" {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "ID is required"})
 		return
 	}
 
-	result := h.DB.Create(service.ConvToDatabaseToDo(newToDo))
+	result := h.DB.Create(service.ConvToDatabaseToDo(newEntry))
 
 	if result.Error != nil {
 		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": result.Error.Error()})
 		return
 	}
 
-	c.IndentedJSON(http.StatusCreated, newToDo)
+	c.IndentedJSON(http.StatusCreated, newEntry)
 }
