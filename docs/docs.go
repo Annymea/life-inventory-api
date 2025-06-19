@@ -15,30 +15,10 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/list": {
+        "/entry": {
             "get": {
-                "description": "Returns a list of all todos",
-                "summary": "Get all todos",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/models.ToDoDTO"
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error"
-                    }
-                }
-            }
-        },
-        "/todo": {
-            "get": {
-                "description": "Returns a list of all todos (fitting to the filters)",
-                "summary": "Get all todos (with filters)",
+                "description": "Returns a list of all entries (fitting to the filters)",
+                "summary": "Get all entries (with filters)",
                 "parameters": [
                     {
                         "type": "boolean",
@@ -59,7 +39,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/models.ToDoDTO"
+                                "$ref": "#/definitions/models.EntryDto"
                             }
                         }
                     },
@@ -75,16 +55,16 @@ const docTemplate = `{
                 }
             },
             "put": {
-                "description": "Updates the todo with the given ID. The existing item will be completely overwritten by the provided data. The item will be identified by the ID of the item.",
-                "summary": "Update a todo",
+                "description": "Updates the entry with the given ID. The existing item will be completely overwritten by the provided data. The item will be identified by the ID of the item.",
+                "summary": "Update a entry",
                 "parameters": [
                     {
-                        "description": "Updated ToDo object",
-                        "name": "ToDo",
+                        "description": "Updated Entry object",
+                        "name": "Entry",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.ToDoDTO"
+                            "$ref": "#/definitions/models.EntryDto"
                         }
                     }
                 ],
@@ -92,7 +72,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.ToDoDTO"
+                            "$ref": "#/definitions/models.EntryDto"
                         }
                     },
                     "400": {
@@ -104,16 +84,16 @@ const docTemplate = `{
                 }
             },
             "post": {
-                "description": "Creates a new todo",
-                "summary": "Create new todo",
+                "description": "Creates a new entry",
+                "summary": "Create new entry",
                 "parameters": [
                     {
-                        "description": "New todo",
-                        "name": "todo",
+                        "description": "New entry",
+                        "name": "entry",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.ToDoDTO"
+                            "$ref": "#/definitions/models.EntryDto"
                         }
                     }
                 ],
@@ -121,7 +101,7 @@ const docTemplate = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/models.ToDoDTO"
+                            "$ref": "#/definitions/models.EntryDto"
                         }
                     },
                     "400": {
@@ -133,14 +113,14 @@ const docTemplate = `{
                 }
             }
         },
-        "/todo/{id}": {
+        "/entry/{id}": {
             "get": {
-                "description": "Returns exactly one todo with the given ID",
-                "summary": "Get a todo by ID",
+                "description": "Returns exactly one entry with the given ID",
+                "summary": "Get a entry by ID",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "ID of the todo",
+                        "description": "ID of the entry",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -152,7 +132,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/models.ToDoDTO"
+                                "$ref": "#/definitions/models.EntryDto"
                             }
                         }
                     },
@@ -165,12 +145,12 @@ const docTemplate = `{
                 }
             },
             "delete": {
-                "description": "Deletes exactly one todo by ID",
-                "summary": "Delete a todo by ID",
+                "description": "Deletes exactly one entry by ID",
+                "summary": "Delete a entry by ID",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "ID of the todo",
+                        "description": "ID of the entry",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -185,10 +165,30 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/list": {
+            "get": {
+                "description": "Returns a list of all entries",
+                "summary": "Get all entries",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.EntryDto"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
         }
     },
     "definitions": {
-        "models.ToDoDTO": {
+        "models.EntryDto": {
             "type": "object",
             "properties": {
                 "done": {
@@ -214,8 +214,8 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "localhost:8080",
 	BasePath:         "/",
 	Schemes:          []string{},
-	Title:            "ToDo Inventory API",
-	Description:      "API zur Verwaltung von ToDos.",
+	Title:            "Life Inventory API",
+	Description:      "",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

@@ -1,6 +1,6 @@
 basePath: /
 definitions:
-  models.ToDoDTO:
+  models.EntryDto:
     properties:
       done:
         type: boolean
@@ -14,26 +14,12 @@ definitions:
 host: localhost:8080
 info:
   contact: {}
-  description: API zur Verwaltung von ToDos.
-  title: ToDo Inventory API
+  title: Life Inventory API
   version: "1.0"
 paths:
-  /list:
+  /entry:
     get:
-      description: Returns a list of all todos
-      responses:
-        "200":
-          description: OK
-          schema:
-            items:
-              $ref: '#/definitions/models.ToDoDTO'
-            type: array
-        "500":
-          description: Internal Server Error
-      summary: Get all todos
-  /todo:
-    get:
-      description: Returns a list of all todos (fitting to the filters)
+      description: Returns a list of all entries (fitting to the filters)
       parameters:
       - description: Filter by done status
         in: query
@@ -48,7 +34,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/models.ToDoDTO'
+              $ref: '#/definitions/models.EntryDto'
             type: array
         "400":
           description: Bad Request
@@ -56,52 +42,52 @@ paths:
           description: Not Found
         "500":
           description: Internal Server Error
-      summary: Get all todos (with filters)
+      summary: Get all entries (with filters)
     post:
-      description: Creates a new todo
+      description: Creates a new entry
       parameters:
-      - description: New todo
+      - description: New entry
         in: body
-        name: todo
+        name: entry
         required: true
         schema:
-          $ref: '#/definitions/models.ToDoDTO'
+          $ref: '#/definitions/models.EntryDto'
       responses:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/models.ToDoDTO'
+            $ref: '#/definitions/models.EntryDto'
         "400":
           description: Bad Request
         "500":
           description: Internal Server Error
-      summary: Create new todo
+      summary: Create new entry
     put:
-      description: Updates the todo with the given ID. The existing item will be completely
-        overwritten by the provided data. The item will be identified by the ID of
-        the item.
+      description: Updates the entry with the given ID. The existing item will be
+        completely overwritten by the provided data. The item will be identified by
+        the ID of the item.
       parameters:
-      - description: Updated ToDo object
+      - description: Updated Entry object
         in: body
-        name: ToDo
+        name: Entry
         required: true
         schema:
-          $ref: '#/definitions/models.ToDoDTO'
+          $ref: '#/definitions/models.EntryDto'
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.ToDoDTO'
+            $ref: '#/definitions/models.EntryDto'
         "400":
           description: Bad Request
         "404":
           description: Not Found
-      summary: Update a todo
-  /todo/{id}:
+      summary: Update a entry
+  /entry/{id}:
     delete:
-      description: Deletes exactly one todo by ID
+      description: Deletes exactly one entry by ID
       parameters:
-      - description: ID of the todo
+      - description: ID of the entry
         in: path
         name: id
         required: true
@@ -111,11 +97,11 @@ paths:
           description: OK
         "500":
           description: Internal Server Error
-      summary: Delete a todo by ID
+      summary: Delete a entry by ID
     get:
-      description: Returns exactly one todo with the given ID
+      description: Returns exactly one entry with the given ID
       parameters:
-      - description: ID of the todo
+      - description: ID of the entry
         in: path
         name: id
         required: true
@@ -125,11 +111,24 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/models.ToDoDTO'
+              $ref: '#/definitions/models.EntryDto'
             type: array
         "404":
           description: Not Found
         "500":
           description: Internal Server Error
-      summary: Get a todo by ID
+      summary: Get a entry by ID
+  /list:
+    get:
+      description: Returns a list of all entries
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.EntryDto'
+            type: array
+        "500":
+          description: Internal Server Error
+      summary: Get all entries
 swagger: "2.0"
