@@ -27,7 +27,7 @@ func (h *Handler) UpdateEntry(c *gin.Context) {
 	}
 
 	//look if there is an existing item with this id
-	existing := datatypes.ToDo{}
+	existing := datatypes.Entry{}
 	result := h.DB.First(&existing, updatedEntry.ID)
 	if result.Error != nil {
 		c.IndentedJSON(http.StatusNotFound, gin.H{"error": "ToDo not found"})
