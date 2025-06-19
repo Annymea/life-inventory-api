@@ -1,6 +1,6 @@
 package models
 
-type ToDoDTO struct {
+type EntryDto struct {
 	ID          string `json:"id"`
 	Title       string `json:"title"`
 	Done        bool   `json:"done"`
