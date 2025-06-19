@@ -7,7 +7,7 @@ import (
 
 //Hier wird das mapping von den entgegengenommenen Types zu Datenbanktypen vorgenommen
 
-func ConvToToDoDTO(dbToDo datatypes.ToDo) models.EntryDto {
+func ConvToToDoDTO(dbToDo datatypes.Entry) models.EntryDto {
 	return models.EntryDto{
 		PlannedDate: dbToDo.PlannedDate,
 		Done:        dbToDo.Done,
@@ -16,7 +16,7 @@ func ConvToToDoDTO(dbToDo datatypes.ToDo) models.EntryDto {
 	}
 }
 
-func ConvListToToDoDTO(dbToDoList []datatypes.ToDo) []models.EntryDto {
+func ConvListToToDoDTO(dbToDoList []datatypes.Entry) []models.EntryDto {
 	convertedList := []models.EntryDto{}
 
 	for _, toDo := range dbToDoList {
@@ -27,8 +27,8 @@ func ConvListToToDoDTO(dbToDoList []datatypes.ToDo) []models.EntryDto {
 	return convertedList
 }
 
-func ConvToDatabaseToDo(dtoToDo models.EntryDto) datatypes.ToDo {
-	return datatypes.ToDo{
+func ConvToDatabaseToDo(dtoToDo models.EntryDto) datatypes.Entry {
+	return datatypes.Entry{
 		ID:          dtoToDo.ID,
 		Title:       dtoToDo.Title,
 		Done:        dtoToDo.Done,

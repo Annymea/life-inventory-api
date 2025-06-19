@@ -1,6 +1,6 @@
 package datatypes
 
-type ToDo struct {
+type Entry struct {
 	ID          string `gorm:"primaryKey"`
 	Title       string
 	Done        bool

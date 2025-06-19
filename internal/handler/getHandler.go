@@ -21,12 +21,12 @@ import (
 // @Failure 500
 // @Router /entry [get]
 func (h *Handler) GetEntryListByParameters(c *gin.Context) {
-	entryList := []datatypes.ToDo{}
+	entryList := []datatypes.Entry{}
 
 	doneFlag := c.Query("done")
 	date := c.Query("date")
 
-	q := h.DB.Model(&datatypes.ToDo{})
+	q := h.DB.Model(&datatypes.Entry{})
 
 	if doneFlag != "" {
 		boolValue, err := strconv.ParseBool(doneFlag)
@@ -63,7 +63,7 @@ func (h *Handler) GetEntryListByParameters(c *gin.Context) {
 // @Failure 500
 // @Router /list [get]
 func (h *Handler) GetEntryList(c *gin.Context) {
-	entryList := []datatypes.ToDo{}
+	entryList := []datatypes.Entry{}
 
 	result := h.DB.Find(&entryList)
 
@@ -90,7 +90,7 @@ func (h *Handler) GetEntryList(c *gin.Context) {
 func (h *Handler) GetListItemById(c *gin.Context) {
 	id := c.Param("id")
 
-	entryListItem := datatypes.ToDo{}
+	entryListItem := datatypes.Entry{}
 
 	result := h.DB.First(&entryListItem, "id = ?", id)
 

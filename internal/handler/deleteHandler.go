@@ -17,7 +17,7 @@ import (
 func (h *Handler) DeleteEntryById(c *gin.Context) {
 	id := c.Param("id")
 
-	result := h.DB.Delete(&datatypes.ToDo{}, id)
+	result := h.DB.Delete(&datatypes.Entry{}, id)
 
 	if result.Error != nil {
 		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": result.Error.Error()})
