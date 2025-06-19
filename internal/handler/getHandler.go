@@ -15,7 +15,7 @@ import (
 // @Description Returns a list of all entries (fitting to the filters)
 // @Param done query bool false "Filter by done status"
 // @Param date query string false "Filter by planned date (YYYY-MM-DD)"
-// @Success 200 {array} models.ToDoDTO
+// @Success 200 {array} models.EntryDto
 // @Failure 400
 // @Failure 404
 // @Failure 500
@@ -59,7 +59,7 @@ func (h *Handler) GetEntryListByParameters(c *gin.Context) {
 
 // @Summary Get all entries
 // @Description Returns a list of all entries
-// @Success 200 {array} models.ToDoDTO
+// @Success 200 {array} models.EntryDto
 // @Failure 500
 // @Router /list [get]
 func (h *Handler) GetEntryList(c *gin.Context) {
@@ -83,7 +83,7 @@ func (h *Handler) GetEntryList(c *gin.Context) {
 // @Summary	Get a entry by ID
 // @Description Returns exactly one entry with the given ID
 // @Param id path string true "ID of the entry"
-// @Success 200 {array} models.ToDoDTO
+// @Success 200 {array} models.EntryDto
 // @Failure 404
 // @Failure 500
 // @Router /entry/{id} [get]

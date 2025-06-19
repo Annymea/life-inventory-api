@@ -11,13 +11,13 @@ import (
 
 // @Summary	Create new entry
 // @Description Creates a new entry
-// @Param entry body models.ToDoDTO true "New entry"
-// @Success 201 {object} models.ToDoDTO
+// @Param entry body models.EntryDto true "New entry"
+// @Success 201 {object} models.EntryDto
 // @Failure 400
 // @Failure 500
 // @Router /entry [post]
 func (h *Handler) PostEntry(c *gin.Context) {
-	var newEntry models.ToDoDTO
+	var newEntry models.EntryDto
 
 	err := c.BindJSON(&newEntry)
 	if err != nil {
