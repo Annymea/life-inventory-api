@@ -1,6 +1,5 @@
-// @title           ToDo Inventory API
+// @title           Life Inventory API
 // @version         1.0
-// @description     API zur Verwaltung von ToDos.
 // @host            localhost:8080
 // @BasePath        /
 package main

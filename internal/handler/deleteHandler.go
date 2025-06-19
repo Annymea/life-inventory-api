@@ -8,13 +8,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// @Summary	Delete a todo by ID
-// @Description Deletes exactly one todo by ID
-// @Param id path string true "ID of the todo"
+// @Summary	Delete a entry by ID
+// @Description Deletes exactly one entry by ID
+// @Param id path string true "ID of the entry"
 // @Success 200
 // @Failure 500
-// @Router /todo/{id} [delete]
-func (h *Handler) DeleteToDoById(c *gin.Context) {
+// @Router /entry/{id} [delete]
+func (h *Handler) DeleteEntryById(c *gin.Context) {
 	id := c.Param("id")
 
 	result := h.DB.Delete(&datatypes.ToDo{}, id)
