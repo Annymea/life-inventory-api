@@ -1,7 +1,7 @@
 package storage
 
 import (
-	"ToDoInventory/internal/storage/datatypes"
+	"LifeInventoryApi/internal/storage/datatypes"
 	"log"
 
 	"gorm.io/driver/postgres"

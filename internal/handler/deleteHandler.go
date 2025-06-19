@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"ToDoInventory/internal/storage/datatypes"
+	"LifeInventoryApi/internal/storage/datatypes"
 	"fmt"
 	"net/http"
 

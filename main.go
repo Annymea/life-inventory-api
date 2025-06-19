@@ -6,9 +6,9 @@
 package main
 
 import (
-	_ "ToDoInventory/docs"
-	"ToDoInventory/internal/router"
-	"ToDoInventory/internal/storage"
+	_ "LifeInventoryApi/docs"
+	"LifeInventoryApi/internal/router"
+	"LifeInventoryApi/internal/storage"
 
 	"github.com/gin-gonic/gin"
 )

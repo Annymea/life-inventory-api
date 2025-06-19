@@ -1,8 +1,8 @@
 package service
 
 import (
-	"ToDoInventory/internal/models"
-	"ToDoInventory/internal/storage/datatypes"
+	"LifeInventoryApi/internal/models"
+	"LifeInventoryApi/internal/storage/datatypes"
 )
 
 //Hier wird das mapping von den entgegengenommenen Types zu Datenbanktypen vorgenommen
