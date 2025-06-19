@@ -1,5 +1,6 @@
 # Life-Inventory-API
 
+
 This repository manages the storage and handling of personal entries — such as tasks, routines, reminders, and appointments — grouped by categories.
 
 ## Current structure of an Entry
@@ -15,7 +16,6 @@ This repository manages the storage and handling of personal entries — such as
 - Delete entries  
 
 ## API Documentation
-
 Swagger UI is available here (the project must be running):  
 👉 [http://localhost:8080/docu/index.html](http://localhost:8080/docu/index.html)
 
