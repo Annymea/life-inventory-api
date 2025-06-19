@@ -30,7 +30,7 @@ func (h *Handler) PostEntry(c *gin.Context) {
 		return
 	}
 
-	result := h.DB.Create(service.ConvToDatabaseToDo(newEntry))
+	result := h.DB.Create(service.ConvToDbEntry(newEntry))
 
 	if result.Error != nil {
 		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": result.Error.Error()})
