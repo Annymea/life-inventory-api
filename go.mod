@@ -1,4 +1,4 @@
-module ToDoInventory
+module LifeInventoryApi
 
 go 1.24.3
 

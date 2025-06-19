@@ -1,9 +1,9 @@
 package handler
 
 import (
-	"ToDoInventory/internal/service"
+	"LifeInventoryApi/internal/service"
 
-	"ToDoInventory/internal/storage/datatypes"
+	"LifeInventoryApi/internal/storage/datatypes"
 	"net/http"
 	"strconv"
 

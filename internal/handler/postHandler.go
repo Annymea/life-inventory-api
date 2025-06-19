@@ -5,8 +5,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"ToDoInventory/internal/models"
-	"ToDoInventory/internal/service"
+	"LifeInventoryApi/internal/models"
+	"LifeInventoryApi/internal/service"
 )
 
 // @Summary	Create new todo

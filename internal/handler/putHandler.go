@@ -1,9 +1,9 @@
 package handler
 
 import (
-	"ToDoInventory/internal/models"
-	"ToDoInventory/internal/service"
-	"ToDoInventory/internal/storage/datatypes"
+	"LifeInventoryApi/internal/models"
+	"LifeInventoryApi/internal/service"
+	"LifeInventoryApi/internal/storage/datatypes"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
