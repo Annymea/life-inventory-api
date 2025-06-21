@@ -25,12 +25,8 @@ func (h *Handler) PostEntry(c *gin.Context) {
 		return
 	}
 
-	if newEntry.ID == "" {
-		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "ID is required"})
-		return
-	}
-
-	result := h.DB.Create(service.ConvToDbEntry(newEntry))
+	dbEntry := service.ConvToDbEntry(newEntry)
+	result := h.DB.Create(&dbEntry)
 
 	if result.Error != nil {
 		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": result.Error.Error()})

@@ -31,8 +31,5 @@ func InitDb() *gorm.DB {
 	}
 	db.AutoMigrate(&datatypes.Entry{})
 
-	testEntry := datatypes.Entry{ID: "5", Title: "Test", Done: true, PlannedDate: ""}
-	AddNewItem(db, testEntry)
-
 	return db
 }
