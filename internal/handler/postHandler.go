@@ -33,5 +33,5 @@ func (h *Handler) PostEntry(c *gin.Context) {
 		return
 	}
 
-	c.IndentedJSON(http.StatusCreated, newEntry)
+	c.IndentedJSON(http.StatusCreated, service.ConvToEntryDto(dbEntry))
 }
