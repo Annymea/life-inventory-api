@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 // @Summary Update a entry
@@ -26,9 +27,16 @@ func (h *Handler) UpdateEntry(c *gin.Context) {
 		return
 	}
 
+	//parse id and check if it is correct
+	id, err := uuid.Parse(updatedEntry.ID)
+	if err != nil {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "Invalid UUID format"})
+		return
+	}
+
 	//look if there is an existing item with this id
 	existing := datatypes.Entry{}
-	result := h.DB.First(&existing, updatedEntry.ID)
+	result := h.DB.First(&existing, "id = ?", id)
 	if result.Error != nil {
 		c.IndentedJSON(http.StatusNotFound, gin.H{"error": "Entry not found"})
 		return

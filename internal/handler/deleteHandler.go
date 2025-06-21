@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 // @Summary	Delete a entry by ID
@@ -15,9 +16,15 @@ import (
 // @Failure 500
 // @Router /entry/{id} [delete]
 func (h *Handler) DeleteEntryById(c *gin.Context) {
-	id := c.Param("id")
+	idStr := c.Param("id")
 
-	result := h.DB.Delete(&datatypes.Entry{}, id)
+	id, err := uuid.Parse(idStr)
+	if err != nil {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "Invalid UUID format"})
+		return
+	}
+
+	result := h.DB.Delete(&datatypes.Entry{}, "id = ?", id)
 
 	if result.Error != nil {
 		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": result.Error.Error()})
