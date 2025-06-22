@@ -3,7 +3,9 @@ package storage
 import (
 	"LifeInventoryApi/internal/storage/datatypes"
 	"log"
+	"os"
 
+	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -19,16 +21,39 @@ func AddNewItem(db *gorm.DB, newItem datatypes.Entry) (newId string, err error) 
 	return newItem.ID, nil
 }
 
-func InitDb() *gorm.DB {
+func builddbUrl() string {
+	err := godotenv.Load(".env")
+	if err != nil {
+		log.Fatalf("Error loading .env file: %s", err)
+	}
 
-	//TODO: Das wirkt noch nicht wirklich gut, hier ist einfach user und pw einfach hard reingecoded...
-	dbUrl := "postgres://pg:pass@localhost:5432/entryInventory"
-	db, err := gorm.Open(postgres.Open(dbUrl), &gorm.Config{})
+	user := os.Getenv("DB_USER")
+	pass := os.Getenv("DB_PASS")
+	host := os.Getenv("DB_HOST")
+	port := os.Getenv("DB_PORT")
+	name := os.Getenv("DB_NAME")
+
+	if user == "" || pass == "" || host == "" || port == "" || name == "" {
+		log.Fatalf("Error reading env variables")
+		return ""
+	}
+
+	return "postgres://" + user + ":" + pass + "@" + host + ":" + port + "/" + name
+}
+
+func InitDb() *gorm.DB {
+	dbUrl := builddbUrl()
+	if dbUrl == "" {
+		return nil
+	}
+
+	db, err := gorm.Open(postgres.Open(builddbUrl()), &gorm.Config{})
 
 	if err != nil {
 		log.Fatalln(err)
 		return nil
 	}
+
 	db.AutoMigrate(&datatypes.Entry{})
 
 	return db
