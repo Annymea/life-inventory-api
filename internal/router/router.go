@@ -16,11 +16,15 @@ func RegisterRoutes(engine *gin.Engine, db *gorm.DB) {
 
 	engine.GET("/docu/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
-	engine.GET("/list", handlerDI.GetEntryList)
-	engine.POST("/entry", handlerDI.PostEntry)
-	engine.GET("/entry/:id", handlerDI.GetListItemById)
-	engine.GET("/entry", handlerDI.GetEntryListByParameters)
-	engine.DELETE("/entry/:id", handlerDI.DeleteEntryById)
-	engine.PUT("/entry", handlerDI.UpdateEntry)
+	api := engine.Group("/api")
+	{
+		v1 := api.Group("/v1")
+		v1.GET("/list", handlerDI.GetEntryList)
+		v1.POST("/entry", handlerDI.PostEntry)
+		v1.GET("/entry/:id", handlerDI.GetListItemById)
+		v1.GET("/entry", handlerDI.GetEntryListByParameters)
+		v1.DELETE("/entry/:id", handlerDI.DeleteEntryById)
+		v1.PUT("/entry", handlerDI.UpdateEntry)
+	}
 
 }
