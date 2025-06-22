@@ -1,7 +1,7 @@
 // @title           Life Inventory API
 // @version         1.0
 // @host            localhost:8080
-// @BasePath        /
+// @BasePath        /api/v1/
 package main
 
 import (
@@ -24,7 +24,6 @@ func main() {
 	//router stuff
 	gin.ForceConsoleColor()
 	r := gin.Default() //Default Middleware -> Wenn ich hier was eigenes habe, dann muss ich es anpassen
-	//r.Use(cors.Default())
 	router.RegisterRoutes(r, db)
 
 	//start server
