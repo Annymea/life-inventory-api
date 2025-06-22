@@ -33,12 +33,21 @@ Swagger UI is available here (the project must be running):
     cd <project-folder>
     ```
 
-2. Start services  
+2. Create a `.env` file in the project root with the following content (for local docker database):  
+    ```env
+    DB_USER=pg
+    DB_PASS=pass
+    DB_HOST=localhost
+    DB_PORT=5432
+    DB_NAME=entryInventory
+    ```
+
+3. Start services  
     ```bash
     docker-compose up
     ```
 
-3. Run the project  
+4. Run the project  
     ```bash
     go run .
     ```
