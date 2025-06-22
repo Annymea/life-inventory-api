@@ -7,7 +7,7 @@ import (
 
 //Hier wird das mapping von den entgegengenommenen Types zu Datenbanktypen vorgenommen
 
-func ConvToEntryDto(entryDto datatypes.Entry) models.EntryDto {
+func ToEntryDto(entryDto datatypes.Entry) models.EntryDto {
 	return models.EntryDto{
 		PlannedDate: entryDto.PlannedDate,
 		Done:        entryDto.Done,
@@ -16,20 +16,28 @@ func ConvToEntryDto(entryDto datatypes.Entry) models.EntryDto {
 	}
 }
 
-func ConvListToEntryDto(dbEntryList []datatypes.Entry) []models.EntryDto {
+func ToEntryDtoList(dbEntryList []datatypes.Entry) []models.EntryDto {
 	convertedList := []models.EntryDto{}
 
 	for _, entry := range dbEntryList {
-		resp := ConvToEntryDto(entry)
+		resp := ToEntryDto(entry)
 		convertedList = append(convertedList, resp)
 	}
 
 	return convertedList
 }
 
-func ConvToDbEntry(entryDto models.EntryDto) datatypes.Entry {
+func ToDbEntry(entryDto models.EntryDto) datatypes.Entry {
 	return datatypes.Entry{
 		ID:          entryDto.ID,
+		Title:       entryDto.Title,
+		Done:        entryDto.Done,
+		PlannedDate: entryDto.PlannedDate,
+	}
+}
+
+func ToDbEntryFromCreate(entryDto models.CreateEntryDto) datatypes.Entry {
+	return datatypes.Entry{
 		Title:       entryDto.Title,
 		Done:        entryDto.Done,
 		PlannedDate: entryDto.PlannedDate,

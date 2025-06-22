@@ -93,7 +93,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.EntryDto"
+                            "$ref": "#/definitions/models.CreateEntryDto"
                         }
                     }
                 ],
@@ -188,6 +188,20 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "models.CreateEntryDto": {
+            "type": "object",
+            "properties": {
+                "done": {
+                    "type": "boolean"
+                },
+                "plannedDate": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        },
         "models.EntryDto": {
             "type": "object",
             "properties": {

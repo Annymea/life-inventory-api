@@ -43,7 +43,7 @@ func (h *Handler) UpdateEntry(c *gin.Context) {
 	}
 
 	//update item if existing
-	result = h.DB.Model(&existing).Updates(service.ConvToDbEntry(updatedEntry))
+	result = h.DB.Model(&existing).Updates(service.ToDbEntry(updatedEntry))
 	if result.Error != nil {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": result.Error.Error()})
 		return

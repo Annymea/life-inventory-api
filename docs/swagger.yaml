@@ -1,5 +1,14 @@
 basePath: /
 definitions:
+  models.CreateEntryDto:
+    properties:
+      done:
+        type: boolean
+      plannedDate:
+        type: string
+      title:
+        type: string
+    type: object
   models.EntryDto:
     properties:
       done:
@@ -51,7 +60,7 @@ paths:
         name: entry
         required: true
         schema:
-          $ref: '#/definitions/models.EntryDto'
+          $ref: '#/definitions/models.CreateEntryDto'
       responses:
         "201":
           description: Created

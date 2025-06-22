@@ -7,9 +7,8 @@ type EntryDto struct {
 	PlannedDate string `json:"plannedDate"`
 }
 
-//Sobald ich die ID autogeneriere
-//type CreateEntryDto struct {
-//	Title       string `json:"title"`
-//	Done        bool   `json:"done"`
-//	PlannedDate string `json:"plannedDate"`
-//}
+type CreateEntryDto struct {
+	Title       string `json:"title"`
+	Done        bool   `json:"done"`
+	PlannedDate string `json:"plannedDate"`
+}
