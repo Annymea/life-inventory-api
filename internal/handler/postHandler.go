@@ -11,13 +11,13 @@ import (
 
 // @Summary	Create new entry
 // @Description Creates a new entry
-// @Param entry body models.EntryDto true "New entry"
+// @Param entry body models.CreateEntryDto true "New entry"
 // @Success 201 {object} models.EntryDto
 // @Failure 400
 // @Failure 500
 // @Router /entry [post]
 func (h *Handler) PostEntry(c *gin.Context) {
-	var newEntry models.EntryDto
+	var newEntry models.CreateEntryDto
 
 	err := c.BindJSON(&newEntry)
 	if err != nil {
@@ -25,7 +25,7 @@ func (h *Handler) PostEntry(c *gin.Context) {
 		return
 	}
 
-	dbEntry := service.ConvToDbEntry(newEntry)
+	dbEntry := service.ToDbEntryFromCreate(newEntry)
 	result := h.DB.Create(&dbEntry)
 
 	if result.Error != nil {
@@ -33,5 +33,5 @@ func (h *Handler) PostEntry(c *gin.Context) {
 		return
 	}
 
-	c.IndentedJSON(http.StatusCreated, service.ConvToEntryDto(dbEntry))
+	c.IndentedJSON(http.StatusCreated, service.ToEntryDto(dbEntry))
 }

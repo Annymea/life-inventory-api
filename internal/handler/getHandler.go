@@ -54,7 +54,7 @@ func (h *Handler) GetEntryListByParameters(c *gin.Context) {
 		return
 	}
 
-	c.IndentedJSON(http.StatusOK, service.ConvListToEntryDto(entryList))
+	c.IndentedJSON(http.StatusOK, service.ToEntryDtoList(entryList))
 }
 
 // @Summary Get all entries
@@ -77,7 +77,7 @@ func (h *Handler) GetEntryList(c *gin.Context) {
 		return
 	}
 
-	c.IndentedJSON(http.StatusOK, service.ConvListToEntryDto(entryList))
+	c.IndentedJSON(http.StatusOK, service.ToEntryDtoList(entryList))
 }
 
 // @Summary	Get a entry by ID
@@ -103,5 +103,5 @@ func (h *Handler) GetListItemById(c *gin.Context) {
 		return
 	}
 
-	c.IndentedJSON(http.StatusOK, service.ConvToEntryDto(entryListItem))
+	c.IndentedJSON(http.StatusOK, service.ToEntryDto(entryListItem))
 }
