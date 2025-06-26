@@ -1,4 +1,4 @@
-package handler
+package entryhandler
 
 import (
 	"LifeInventoryApi/internal/storage/datatypes"
@@ -15,7 +15,7 @@ import (
 // @Success 200
 // @Failure 500
 // @Router /entry/{id} [delete]
-func (h *Handler) DeleteEntryById(c *gin.Context) {
+func (h *EntryHandler) DeleteEntryById(c *gin.Context) {
 	idStr := c.Param("id")
 
 	id, err := uuid.Parse(idStr)

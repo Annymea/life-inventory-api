@@ -1,4 +1,4 @@
-package handler
+package entryhandler
 
 import (
 	"LifeInventoryApi/internal/service"
@@ -20,7 +20,7 @@ import (
 // @Failure 404
 // @Failure 500
 // @Router /entry [get]
-func (h *Handler) GetEntryListByParameters(c *gin.Context) {
+func (h *EntryHandler) GetEntryListByParameters(c *gin.Context) {
 	entryList := []datatypes.Entry{}
 
 	doneFlag := c.Query("done")
@@ -62,7 +62,7 @@ func (h *Handler) GetEntryListByParameters(c *gin.Context) {
 // @Success 200 {array} models.EntryDto
 // @Failure 500
 // @Router /list [get]
-func (h *Handler) GetEntryList(c *gin.Context) {
+func (h *EntryHandler) GetEntryList(c *gin.Context) {
 	entryList := []datatypes.Entry{}
 
 	result := h.DB.Find(&entryList)
@@ -87,7 +87,7 @@ func (h *Handler) GetEntryList(c *gin.Context) {
 // @Failure 404
 // @Failure 500
 // @Router /entry/{id} [get]
-func (h *Handler) GetListItemById(c *gin.Context) {
+func (h *EntryHandler) GetListItemById(c *gin.Context) {
 	id := c.Param("id")
 
 	entryListItem := datatypes.Entry{}

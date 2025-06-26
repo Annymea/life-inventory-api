@@ -1,10 +1,10 @@
 package router
 
 import (
+	"LifeInventoryApi/internal/handler/entryhandler"
+
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
-
-	"LifeInventoryApi/internal/handler"
 
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -12,19 +12,19 @@ import (
 
 func RegisterRoutes(engine *gin.Engine, db *gorm.DB) {
 
-	handlerDI := handler.NewHandler(db)
+	entryHandlerDI := entryhandler.NewEntryHandler(db)
 
 	engine.GET("/docu/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	api := engine.Group("/api")
 	{
 		v1 := api.Group("/v1")
-		v1.GET("/list", handlerDI.GetEntryList)
-		v1.POST("/entry", handlerDI.PostEntry)
-		v1.GET("/entry/:id", handlerDI.GetListItemById)
-		v1.GET("/entry", handlerDI.GetEntryListByParameters)
-		v1.DELETE("/entry/:id", handlerDI.DeleteEntryById)
-		v1.PUT("/entry", handlerDI.UpdateEntry)
+		v1.GET("/list", entryHandlerDI.GetEntryList)
+		v1.POST("/entry", entryHandlerDI.PostEntry)
+		v1.GET("/entry/:id", entryHandlerDI.GetListItemById)
+		v1.GET("/entry", entryHandlerDI.GetEntryListByParameters)
+		v1.DELETE("/entry/:id", entryHandlerDI.DeleteEntryById)
+		v1.PUT("/entry", entryHandlerDI.UpdateEntry)
 	}
 
 }

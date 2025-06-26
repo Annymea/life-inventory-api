@@ -1,4 +1,4 @@
-package handler
+package entryhandler
 
 import (
 	"LifeInventoryApi/internal/models"
@@ -17,7 +17,7 @@ import (
 // @Failure 400
 // @Failure 404
 // @Router /entry [put]
-func (h *Handler) UpdateEntry(c *gin.Context) {
+func (h *EntryHandler) UpdateEntry(c *gin.Context) {
 	updatedEntry := models.EntryDto{}
 
 	//read json

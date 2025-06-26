@@ -1,4 +1,4 @@
-package handler
+package entryhandler
 
 import (
 	"net/http"
@@ -16,7 +16,7 @@ import (
 // @Failure 400
 // @Failure 500
 // @Router /entry [post]
-func (h *Handler) PostEntry(c *gin.Context) {
+func (h *EntryHandler) PostEntry(c *gin.Context) {
 	var newEntry models.CreateEntryDto
 
 	err := c.BindJSON(&newEntry)
