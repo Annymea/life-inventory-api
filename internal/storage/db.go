@@ -55,6 +55,7 @@ func InitDb() *gorm.DB {
 	}
 
 	db.AutoMigrate(&datatypes.Entry{})
+	db.AutoMigrate(&datatypes.User{})
 
 	return db
 }
