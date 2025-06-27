@@ -40,7 +40,7 @@ func (h *AuthHandler) Login(c *gin.Context) {
 	//generiert ein token für den user
 	generateToken := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"id":  userFound.ID,
-		"exp": time.Now().Add(time.Hour * 24).Unix(),
+		"exp": time.Now().Add(time.Hour * 24).Unix(), //dauer für token validität hier 24h
 	})
 
 	//signiert das token mit dem secret, welches von mir vorher festgelegt wurde in getenv
