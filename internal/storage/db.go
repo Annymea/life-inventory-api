@@ -21,7 +21,7 @@ func AddNewItem(db *gorm.DB, newItem datatypes.Entry) (newId string, err error) 
 	return newItem.ID, nil
 }
 
-func builddbUrl() string {
+func buildDbUrl() string {
 	err := godotenv.Load(".env")
 	if err != nil {
 		log.Fatalf("Error loading .env file: %s", err)
@@ -41,16 +41,25 @@ func builddbUrl() string {
 	return "postgres://" + user + ":" + pass + "@" + host + ":" + port + "/" + name
 }
 
+func connectDb(dbUrl string) *gorm.DB {
+	db, err := gorm.Open(postgres.Open(dbUrl), &gorm.Config{})
+
+	if err != nil {
+		log.Fatalln("Failed to connect to DB:", err)
+		return nil
+	}
+
+	return db
+}
+
 func InitDb() *gorm.DB {
-	dbUrl := builddbUrl()
+	dbUrl := buildDbUrl()
 	if dbUrl == "" {
 		return nil
 	}
 
-	db, err := gorm.Open(postgres.Open(builddbUrl()), &gorm.Config{})
-
-	if err != nil {
-		log.Fatalln(err)
+	db := connectDb(dbUrl)
+	if db == nil {
 		return nil
 	}
 
