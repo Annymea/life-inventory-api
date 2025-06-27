@@ -9,6 +9,7 @@ import (
 	"LifeInventoryApi/internal/storage/datatypes"
 
 	"github.com/gin-gonic/gin"
+	"github.com/golang-jwt/jwt/v5"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -36,18 +37,20 @@ func (h *AuthHandler) Login(c *gin.Context) {
 		return
 	}
 
-	//ab hier weiß ich nicht genau was passiert
+	//generiert ein token für den user
 	generateToken := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"id":  userFound.ID,
 		"exp": time.Now().Add(time.Hour * 24).Unix(),
 	})
 
+	//signiert das token mit dem secret, welches von mir vorher festgelegt wurde in getenv
 	token, err := generateToken.SignedString([]byte(os.Getenv("SECRET")))
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "failed to generate token"})
 	}
 
+	//gibt den token wieder zurück
 	c.JSON(200, gin.H{
 		"token": token,
 	})
