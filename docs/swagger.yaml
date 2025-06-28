@@ -31,6 +31,9 @@ definitions:
         type: string
       title:
         type: string
+    required:
+    - done
+    - title
     type: object
   models.EntryDto:
     properties:
@@ -42,6 +45,9 @@ definitions:
         type: string
       title:
         type: string
+    required:
+    - id
+    - title
     type: object
 info:
   contact: {}
@@ -210,23 +216,6 @@ paths:
       security:
       - BearerAuth: []
       summary: Get a entry by ID
-      tags:
-      - Entry
-  /list:
-    get:
-      description: Returns a list of all entries
-      responses:
-        "200":
-          description: OK
-          schema:
-            items:
-              $ref: '#/definitions/models.EntryDto'
-            type: array
-        "500":
-          description: Internal Server Error
-      security:
-      - BearerAuth: []
-      summary: Get all entries
       tags:
       - Entry
 securityDefinitions:

@@ -20,8 +20,13 @@ import (
 // @Security 		BearerAuth
 // @Router 			/entry [put]
 func (h *EntryHandler) UpdateEntry(c *gin.Context) {
-	updatedEntry := models.EntryDto{}
+	user, ok := service.GetUser(c)
+	if !ok {
+		c.IndentedJSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+		return
+	}
 
+	updatedEntry := models.EntryDto{}
 	//read json
 	err := c.BindJSON(&updatedEntry)
 	if err != nil {
@@ -38,7 +43,7 @@ func (h *EntryHandler) UpdateEntry(c *gin.Context) {
 
 	//look if there is an existing item with this id
 	existing := datatypes.Entry{}
-	result := h.DB.First(&existing, "id = ?", id)
+	result := h.DB.First(&existing, "id = ? AND user_id = ?", id, user.ID)
 	if result.Error != nil {
 		c.IndentedJSON(http.StatusNotFound, gin.H{"error": "Entry not found"})
 		return
@@ -48,6 +53,11 @@ func (h *EntryHandler) UpdateEntry(c *gin.Context) {
 	result = h.DB.Model(&existing).Updates(service.ToDbEntry(updatedEntry))
 	if result.Error != nil {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": result.Error.Error()})
+		return
+	}
+
+	if result.RowsAffected == 0 {
+		c.IndentedJSON(http.StatusNotModified, gin.H{"message": "No changes applied"})
 		return
 	}
 
