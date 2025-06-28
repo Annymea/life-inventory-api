@@ -33,7 +33,6 @@ func RegisterRoutes(engine *gin.Engine, db *gorm.DB) {
 		// Geschützte Routen
 		protected := v1.Group("/", middleware.CheckAuth(db))
 		{
-			protected.GET("/list", entryHandlerDI.GetEntryList)
 			protected.POST("/entry", entryHandlerDI.PostEntry)
 			protected.GET("/entry/:id", entryHandlerDI.GetListItemById)
 			protected.GET("/entry", entryHandlerDI.GetEntryListByParameters)

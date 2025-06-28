@@ -8,6 +8,7 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 	"gorm.io/gorm"
 )
 
@@ -23,12 +24,19 @@ import (
 // @Security 		BearerAuth
 // @Router 			/entry [get]
 func (h *EntryHandler) GetEntryListByParameters(c *gin.Context) {
+	user, ok := service.GetUser(c)
+	if !ok {
+		c.IndentedJSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+		return
+	}
+
 	entryList := []datatypes.Entry{}
 
 	doneFlag := c.Query("done")
 	date := c.Query("date")
 
-	q := h.DB.Model(&datatypes.Entry{})
+	query := h.DB.Model(&datatypes.Entry{})
+	query = query.Where("user_id = ?", user.ID)
 
 	if doneFlag != "" {
 		boolValue, err := strconv.ParseBool(doneFlag)
@@ -37,47 +45,16 @@ func (h *EntryHandler) GetEntryListByParameters(c *gin.Context) {
 			return
 		}
 
-		q = q.Where("done = ?", boolValue)
+		query = query.Where("done = ?", boolValue)
 	}
 
 	if date != "" {
-		q = q.Where("planned_date = ?", date)
+		query = query.Where("planned_date = ?", date)
 	}
 
-	result := q.Find(&entryList)
-
+	result := query.Find(&entryList)
 	if result.Error != nil {
 		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": result.Error.Error()})
-		return
-	}
-
-	if len(entryList) == 0 {
-		c.IndentedJSON(http.StatusNotFound, gin.H{"message": "no items found"})
-		return
-	}
-
-	c.IndentedJSON(http.StatusOK, service.ToEntryDtoList(entryList))
-}
-
-// @Summary 		Get all entries
-// @Description 	Returns a list of all entries
-// @Tags			Entry
-// @Success 		200 {array} models.EntryDto
-// @Failure 		500
-// @Security 		BearerAuth
-// @Router 			/list [get]
-func (h *EntryHandler) GetEntryList(c *gin.Context) {
-	entryList := []datatypes.Entry{}
-
-	result := h.DB.Find(&entryList)
-
-	if result.Error != nil {
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": result.Error.Error()})
-		return
-	}
-
-	if len(entryList) == 0 {
-		c.IndentedJSON(http.StatusNotFound, gin.H{"message": "no items found"})
 		return
 	}
 
@@ -94,12 +71,21 @@ func (h *EntryHandler) GetEntryList(c *gin.Context) {
 // @Security 		BearerAuth
 // @Router 			/entry/{id} [get]
 func (h *EntryHandler) GetListItemById(c *gin.Context) {
-	id := c.Param("id")
+	user, ok := service.GetUser(c)
+	if !ok {
+		c.IndentedJSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+		return
+	}
 
-	entryListItem := datatypes.Entry{}
+	entryIdInput := c.Param("id")
+	id, err := uuid.Parse(entryIdInput)
+	if err != nil {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "Invalid UUID format"})
+		return
+	}
 
-	result := h.DB.First(&entryListItem, "id = ?", id)
-
+	entry := datatypes.Entry{}
+	result := h.DB.First(&entry, "id = ? AND user_id = ?", id, user.ID)
 	if result.Error != nil {
 		if result.Error == gorm.ErrRecordNotFound {
 			c.IndentedJSON(http.StatusNotFound, gin.H{"message": "item not found"})
@@ -109,5 +95,5 @@ func (h *EntryHandler) GetListItemById(c *gin.Context) {
 		return
 	}
 
-	c.IndentedJSON(http.StatusOK, service.ToEntryDto(entryListItem))
+	c.IndentedJSON(http.StatusOK, service.ToEntryDto(entry))
 }

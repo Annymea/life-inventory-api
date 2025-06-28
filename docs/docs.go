@@ -270,34 +270,6 @@ const docTemplate = `{
                     }
                 }
             }
-        },
-        "/list": {
-            "get": {
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ],
-                "description": "Returns a list of all entries",
-                "tags": [
-                    "Entry"
-                ],
-                "summary": "Get all entries",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/models.EntryDto"
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error"
-                    }
-                }
-            }
         }
     },
     "definitions": {
@@ -338,6 +310,10 @@ const docTemplate = `{
         },
         "models.CreateEntryDto": {
             "type": "object",
+            "required": [
+                "done",
+                "title"
+            ],
             "properties": {
                 "done": {
                     "type": "boolean"
@@ -352,6 +328,10 @@ const docTemplate = `{
         },
         "models.EntryDto": {
             "type": "object",
+            "required": [
+                "id",
+                "title"
+            ],
             "properties": {
                 "done": {
                     "type": "boolean"
