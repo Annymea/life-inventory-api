@@ -10,6 +10,7 @@ type Entry struct {
 	Title       string
 	Done        bool
 	PlannedDate string
+	UserID      uint
 }
 
 func (e *Entry) BeforeCreate(tx *gorm.DB) (err error) {

@@ -8,7 +8,7 @@ type EntryDto struct {
 }
 
 type CreateEntryDto struct {
-	Title       string `json:"title"`
-	Done        bool   `json:"done"`
+	Title       string `json:"title" binding:"required"`
+	Done        bool   `json:"done" binding:"required"`
 	PlannedDate string `json:"plannedDate"`
 }

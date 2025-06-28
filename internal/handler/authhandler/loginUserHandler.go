@@ -17,7 +17,7 @@ import (
 // @Description 	Returns valid token for a user to use it for the api requests
 // @Param 			login body models.AuthInput true "Username and password"
 // @Tags			Auth
-// @Success 		200
+// @Success 		200 {object} map[string]string
 // @Failure 		500
 // @Router 			/auth/login [post]
 func (h *AuthHandler) Login(c *gin.Context) {

@@ -19,7 +19,13 @@ import (
 // @Security 		BearerAuth
 // @Router 			/entry [post]
 func (h *EntryHandler) PostEntry(c *gin.Context) {
-	var newEntry models.CreateEntryDto
+	newEntry := models.CreateEntryDto{}
+
+	user, ok := service.GetUser(c)
+	if !ok {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+		return
+	}
 
 	err := c.BindJSON(&newEntry)
 	if err != nil {
@@ -28,6 +34,8 @@ func (h *EntryHandler) PostEntry(c *gin.Context) {
 	}
 
 	dbEntry := service.ToDbEntryFromCreate(newEntry)
+	dbEntry.UserID = user.ID
+
 	result := h.DB.Create(&dbEntry)
 
 	if result.Error != nil {
