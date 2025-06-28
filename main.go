@@ -1,7 +1,18 @@
-// @title           Life Inventory API
+// @title           Meine API
 // @version         1.0
-// @host            localhost:8080
-// @BasePath        /api/v1/
+// @description     Dokumentation der REST-API
+// @BasePath        /api/v1
+
+// @securityDefinitions.apikey BearerAuth
+// @in header
+// @name Authorization
+// @description Enter your token with the 'Bearer ' prefix. Example: 'Bearer eyJhbGciOi...'
+
+// @tag.name Entry
+// @tag.description All entry-related endpoints
+
+// @tag.name Auth
+// @tag.description Login & registration
 package main
 
 import (

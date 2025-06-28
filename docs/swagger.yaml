@@ -1,5 +1,15 @@
-basePath: /api/v1/
+basePath: /api/v1
 definitions:
+  models.AuthInput:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
   models.CreateEntryDto:
     properties:
       done:
@@ -20,12 +30,48 @@ definitions:
       title:
         type: string
     type: object
-host: localhost:8080
 info:
   contact: {}
-  title: Life Inventory API
+  description: Dokumentation der REST-API
+  title: Meine API
   version: "1.0"
 paths:
+  /auth/login:
+    post:
+      description: Returns valid token for a user to use it for the api requests
+      parameters:
+      - description: Username and password
+        in: body
+        name: login
+        required: true
+        schema:
+          $ref: '#/definitions/models.AuthInput'
+      responses:
+        "200":
+          description: OK
+        "500":
+          description: Internal Server Error
+      summary: Returns valid token
+      tags:
+      - Auth
+  /auth/signup:
+    post:
+      description: Create a user which can be used to create a token
+      parameters:
+      - description: Username and password
+        in: body
+        name: signup
+        required: true
+        schema:
+          $ref: '#/definitions/models.AuthInput'
+      responses:
+        "200":
+          description: OK
+        "500":
+          description: Internal Server Error
+      summary: Creates a user
+      tags:
+      - Auth
   /entry:
     get:
       description: Returns a list of all entries (fitting to the filters)
@@ -51,7 +97,11 @@ paths:
           description: Not Found
         "500":
           description: Internal Server Error
+      security:
+      - BearerAuth: []
       summary: Get all entries (with filters)
+      tags:
+      - Entry
     post:
       description: Creates a new entry
       parameters:
@@ -70,7 +120,11 @@ paths:
           description: Bad Request
         "500":
           description: Internal Server Error
+      security:
+      - BearerAuth: []
       summary: Create new entry
+      tags:
+      - Entry
     put:
       description: Updates the entry with the given ID. The existing item will be
         completely overwritten by the provided data. The item will be identified by
@@ -91,7 +145,11 @@ paths:
           description: Bad Request
         "404":
           description: Not Found
+      security:
+      - BearerAuth: []
       summary: Update a entry
+      tags:
+      - Entry
   /entry/{id}:
     delete:
       description: Deletes exactly one entry by ID
@@ -106,7 +164,11 @@ paths:
           description: OK
         "500":
           description: Internal Server Error
+      security:
+      - BearerAuth: []
       summary: Delete a entry by ID
+      tags:
+      - Entry
     get:
       description: Returns exactly one entry with the given ID
       parameters:
@@ -126,7 +188,11 @@ paths:
           description: Not Found
         "500":
           description: Internal Server Error
+      security:
+      - BearerAuth: []
       summary: Get a entry by ID
+      tags:
+      - Entry
   /list:
     get:
       description: Returns a list of all entries
@@ -139,5 +205,21 @@ paths:
             type: array
         "500":
           description: Internal Server Error
+      security:
+      - BearerAuth: []
       summary: Get all entries
+      tags:
+      - Entry
+securityDefinitions:
+  BearerAuth:
+    description: 'Enter your token with the ''Bearer '' prefix. Example: ''Bearer
+      eyJhbGciOi...'''
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"
+tags:
+- description: All entry-related endpoints
+  name: Entry
+- description: Login & registration
+  name: Auth

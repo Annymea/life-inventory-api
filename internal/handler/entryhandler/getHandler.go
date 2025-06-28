@@ -11,15 +11,17 @@ import (
 	"gorm.io/gorm"
 )
 
-// @Summary Get all entries (with filters)
-// @Description Returns a list of all entries (fitting to the filters)
-// @Param done query bool false "Filter by done status"
-// @Param date query string false "Filter by planned date (YYYY-MM-DD)"
-// @Success 200 {array} models.EntryDto
-// @Failure 400
-// @Failure 404
-// @Failure 500
-// @Router /entry [get]
+// @Summary 		Get all entries (with filters)
+// @Description 	Returns a list of all entries (fitting to the filters)
+// @Param 			done query bool false "Filter by done status"
+// @Param 			date query string false "Filter by planned date (YYYY-MM-DD)"
+// @Tags			Entry
+// @Success 		200 {array} models.EntryDto
+// @Failure 		400
+// @Failure 		404
+// @Failure 		500
+// @Security 		BearerAuth
+// @Router 			/entry [get]
 func (h *EntryHandler) GetEntryListByParameters(c *gin.Context) {
 	entryList := []datatypes.Entry{}
 
@@ -57,11 +59,13 @@ func (h *EntryHandler) GetEntryListByParameters(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, service.ToEntryDtoList(entryList))
 }
 
-// @Summary Get all entries
-// @Description Returns a list of all entries
-// @Success 200 {array} models.EntryDto
-// @Failure 500
-// @Router /list [get]
+// @Summary 		Get all entries
+// @Description 	Returns a list of all entries
+// @Tags			Entry
+// @Success 		200 {array} models.EntryDto
+// @Failure 		500
+// @Security 		BearerAuth
+// @Router 			/list [get]
 func (h *EntryHandler) GetEntryList(c *gin.Context) {
 	entryList := []datatypes.Entry{}
 
@@ -80,13 +84,15 @@ func (h *EntryHandler) GetEntryList(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, service.ToEntryDtoList(entryList))
 }
 
-// @Summary	Get a entry by ID
-// @Description Returns exactly one entry with the given ID
-// @Param id path string true "ID of the entry"
-// @Success 200 {array} models.EntryDto
-// @Failure 404
-// @Failure 500
-// @Router /entry/{id} [get]
+// @Summary			Get a entry by ID
+// @Description 	Returns exactly one entry with the given ID
+// @Param 			id path string true "ID of the entry"
+// @Tags			Entry
+// @Success 		200 {array} models.EntryDto
+// @Failure 		404
+// @Failure 		500
+// @Security 		BearerAuth
+// @Router 			/entry/{id} [get]
 func (h *EntryHandler) GetListItemById(c *gin.Context) {
 	id := c.Param("id")
 

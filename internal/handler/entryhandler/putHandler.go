@@ -10,13 +10,15 @@ import (
 	"github.com/google/uuid"
 )
 
-// @Summary Update a entry
-// @Description Updates the entry with the given ID. The existing item will be completely overwritten by the provided data. The item will be identified by the ID of the item.
-// @Param Entry body models.EntryDto true "Updated Entry object"
-// @Success 200 {object} models.EntryDto
-// @Failure 400
-// @Failure 404
-// @Router /entry [put]
+// @Summary 		Update a entry
+// @Description 	Updates the entry with the given ID. The existing item will be completely overwritten by the provided data. The item will be identified by the ID of the item.
+// @Param 			Entry body models.EntryDto true "Updated Entry object"
+// @Tags			Entry
+// @Success 		200 {object} models.EntryDto
+// @Failure 		400
+// @Failure 		404
+// @Security 		BearerAuth
+// @Router 			/entry [put]
 func (h *EntryHandler) UpdateEntry(c *gin.Context) {
 	updatedEntry := models.EntryDto{}
 

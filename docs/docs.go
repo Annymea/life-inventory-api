@@ -15,9 +15,73 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/auth/login": {
+            "post": {
+                "description": "Returns valid token for a user to use it for the api requests",
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Returns valid token",
+                "parameters": [
+                    {
+                        "description": "Username and password",
+                        "name": "login",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.AuthInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/auth/signup": {
+            "post": {
+                "description": "Create a user which can be used to create a token",
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Creates a user",
+                "parameters": [
+                    {
+                        "description": "Username and password",
+                        "name": "signup",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.AuthInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
         "/entry": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Returns a list of all entries (fitting to the filters)",
+                "tags": [
+                    "Entry"
+                ],
                 "summary": "Get all entries (with filters)",
                 "parameters": [
                     {
@@ -55,7 +119,15 @@ const docTemplate = `{
                 }
             },
             "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Updates the entry with the given ID. The existing item will be completely overwritten by the provided data. The item will be identified by the ID of the item.",
+                "tags": [
+                    "Entry"
+                ],
                 "summary": "Update a entry",
                 "parameters": [
                     {
@@ -84,7 +156,15 @@ const docTemplate = `{
                 }
             },
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Creates a new entry",
+                "tags": [
+                    "Entry"
+                ],
                 "summary": "Create new entry",
                 "parameters": [
                     {
@@ -115,7 +195,15 @@ const docTemplate = `{
         },
         "/entry/{id}": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Returns exactly one entry with the given ID",
+                "tags": [
+                    "Entry"
+                ],
                 "summary": "Get a entry by ID",
                 "parameters": [
                     {
@@ -145,7 +233,15 @@ const docTemplate = `{
                 }
             },
             "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Deletes exactly one entry by ID",
+                "tags": [
+                    "Entry"
+                ],
                 "summary": "Delete a entry by ID",
                 "parameters": [
                     {
@@ -168,7 +264,15 @@ const docTemplate = `{
         },
         "/list": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Returns a list of all entries",
+                "tags": [
+                    "Entry"
+                ],
                 "summary": "Get all entries",
                 "responses": {
                     "200": {
@@ -188,6 +292,21 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "models.AuthInput": {
+            "type": "object",
+            "required": [
+                "password",
+                "username"
+            ],
+            "properties": {
+                "password": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
         "models.CreateEntryDto": {
             "type": "object",
             "properties": {
@@ -219,17 +338,35 @@ const docTemplate = `{
                 }
             }
         }
-    }
+    },
+    "securityDefinitions": {
+        "BearerAuth": {
+            "description": "Enter your token with the 'Bearer ' prefix. Example: 'Bearer eyJhbGciOi...'",
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    },
+    "tags": [
+        {
+            "description": "All entry-related endpoints",
+            "name": "Entry"
+        },
+        {
+            "description": "Login \u0026 registration",
+            "name": "Auth"
+        }
+    ]
 }`
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
-	Host:             "localhost:8080",
-	BasePath:         "/api/v1/",
+	Host:             "",
+	BasePath:         "/api/v1",
 	Schemes:          []string{},
-	Title:            "Life Inventory API",
-	Description:      "",
+	Title:            "Meine API",
+	Description:      "Dokumentation der REST-API",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

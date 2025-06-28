@@ -19,23 +19,26 @@ func RegisterRoutes(engine *gin.Engine, db *gorm.DB) {
 
 	engine.GET("/docu/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
-	auth := engine.Group("/auth")
-	{
-		auth.POST("/auth/signup", authHandlerDI.CreateUser)
-		auth.POST("/auth/login", authHandlerDI.Login)
-	}
-
 	api := engine.Group("/api")
 	{
-		//middleware wird nur für die folgenden routen gebraucht. bei den anderern holt man sich ja erst das token
-		v1 := api.Group("/v1", middleware.CheckAuth(db))
+		v1 := api.Group("/v1")
+
+		// Public Auth-Routen (ohne Auth-Middleware)
+		auth := v1.Group("/auth")
 		{
-			v1.GET("/list", entryHandlerDI.GetEntryList)
-			v1.POST("/entry", entryHandlerDI.PostEntry)
-			v1.GET("/entry/:id", entryHandlerDI.GetListItemById)
-			v1.GET("/entry", entryHandlerDI.GetEntryListByParameters)
-			v1.DELETE("/entry/:id", entryHandlerDI.DeleteEntryById)
-			v1.PUT("/entry", entryHandlerDI.UpdateEntry)
+			auth.POST("/signup", authHandlerDI.CreateUser)
+			auth.POST("/login", authHandlerDI.Login)
+		}
+
+		// Geschützte Routen
+		protected := v1.Group("/", middleware.CheckAuth(db))
+		{
+			protected.GET("/list", entryHandlerDI.GetEntryList)
+			protected.POST("/entry", entryHandlerDI.PostEntry)
+			protected.GET("/entry/:id", entryHandlerDI.GetListItemById)
+			protected.GET("/entry", entryHandlerDI.GetEntryListByParameters)
+			protected.DELETE("/entry/:id", entryHandlerDI.DeleteEntryById)
+			protected.PUT("/entry", entryHandlerDI.UpdateEntry)
 		}
 	}
 

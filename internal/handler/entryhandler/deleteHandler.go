@@ -9,12 +9,14 @@ import (
 	"github.com/google/uuid"
 )
 
-// @Summary	Delete a entry by ID
-// @Description Deletes exactly one entry by ID
-// @Param id path string true "ID of the entry"
-// @Success 200
-// @Failure 500
-// @Router /entry/{id} [delete]
+// @Summary			Delete a entry by ID
+// @Description 	Deletes exactly one entry by ID
+// @Param 			id path string true "ID of the entry"
+// @Tags			Entry
+// @Success 		200
+// @Failure 		500
+// @Security 		BearerAuth
+// @Router 			/entry/{id} [delete]
 func (h *EntryHandler) DeleteEntryById(c *gin.Context) {
 	idStr := c.Param("id")
 
