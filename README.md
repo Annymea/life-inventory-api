@@ -8,6 +8,7 @@ This repository manages the storage and handling of personal entries — such as
 - **Status** (done or not done)  
 
 ## Features
+- User management
 - Retrieve the list of entries  
 - Retrieve individual entries  
 - Save new entries  
@@ -40,6 +41,7 @@ Swagger UI is available here (the project must be running):
     DB_HOST=localhost
     DB_PORT=5432
     DB_NAME=entryInventory
+    SECRET=auth-api-jwt-secret
     ```
 
 3. Start services  
