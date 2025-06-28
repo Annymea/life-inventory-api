@@ -9,13 +9,15 @@ import (
 	"LifeInventoryApi/internal/service"
 )
 
-// @Summary	Create new entry
-// @Description Creates a new entry
-// @Param entry body models.CreateEntryDto true "New entry"
-// @Success 201 {object} models.EntryDto
-// @Failure 400
-// @Failure 500
-// @Router /entry [post]
+// @Summary			Create new entry
+// @Description 	Creates a new entry
+// @Param 			entry body models.CreateEntryDto true "New entry"
+// @Tags			Entry
+// @Success 		201 {object} models.EntryDto
+// @Failure 		400
+// @Failure 		500
+// @Security 		BearerAuth
+// @Router 			/entry [post]
 func (h *EntryHandler) PostEntry(c *gin.Context) {
 	var newEntry models.CreateEntryDto
 

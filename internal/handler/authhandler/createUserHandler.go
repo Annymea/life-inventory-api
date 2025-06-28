@@ -10,6 +10,13 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+// @Summary			Creates a user
+// @Description 	Create a user which can be used to create a token
+// @Param 			signup body models.AuthInput true "Username and password"
+// @Tags			Auth
+// @Success 		200
+// @Failure 		500
+// @Router 			/auth/signup [post]
 func (h *AuthHandler) CreateUser(c *gin.Context) {
 	var authInput models.AuthInput
 

@@ -13,6 +13,13 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+// @Summary 		Returns valid token
+// @Description 	Returns valid token for a user to use it for the api requests
+// @Param 			login body models.AuthInput true "Username and password"
+// @Tags			Auth
+// @Success 		200
+// @Failure 		500
+// @Router 			/auth/login [post]
 func (h *AuthHandler) Login(c *gin.Context) {
 	var authInput models.AuthInput
 
