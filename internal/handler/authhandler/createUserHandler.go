@@ -14,7 +14,7 @@ import (
 // @Description 	Create a user which can be used to create a token
 // @Param 			signup body models.AuthInput true "Username and password"
 // @Tags			Auth
-// @Success 		200
+// @Success 		200 {object} datatypes.User
 // @Failure 		500
 // @Router 			/auth/signup [post]
 func (h *AuthHandler) CreateUser(c *gin.Context) {

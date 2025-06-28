@@ -1,5 +1,18 @@
 basePath: /api/v1
 definitions:
+  datatypes.User:
+    properties:
+      createdAt:
+        type: string
+      id:
+        type: integer
+      password:
+        type: string
+      updatedAt:
+        type: string
+      username:
+        type: string
+    type: object
   models.AuthInput:
     properties:
       password:
@@ -49,6 +62,10 @@ paths:
       responses:
         "200":
           description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
         "500":
           description: Internal Server Error
       summary: Returns valid token
@@ -67,6 +84,8 @@ paths:
       responses:
         "200":
           description: OK
+          schema:
+            $ref: '#/definitions/datatypes.User'
         "500":
           description: Internal Server Error
       summary: Creates a user

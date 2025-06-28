@@ -3,6 +3,8 @@ package service
 import (
 	"LifeInventoryApi/internal/models"
 	"LifeInventoryApi/internal/storage/datatypes"
+
+	"github.com/gin-gonic/gin"
 )
 
 //Hier wird das mapping von den entgegengenommenen Types zu Datenbanktypen vorgenommen
@@ -42,4 +44,16 @@ func ToDbEntryFromCreate(entryDto models.CreateEntryDto) datatypes.Entry {
 		Done:        entryDto.Done,
 		PlannedDate: entryDto.PlannedDate,
 	}
+}
+
+func GetUser(c *gin.Context) (datatypes.User, bool) {
+	userRaw, ok := c.Get("currentUser")
+	if !ok {
+		return datatypes.User{}, false
+	}
+	user, ok := userRaw.(datatypes.User)
+	if !ok {
+		return datatypes.User{}, false
+	}
+	return user, true
 }
